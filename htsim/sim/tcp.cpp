@@ -186,7 +186,7 @@ TcpSrc::receivePacket(Packet& pkt)
     if (seqno >= _flow_size){
         cout << "Flow " << nodename() << " finished at " << timeAsMs(eventlist().now()) << endl;        
 #ifdef ASTRASIM_HTSIM
-        // AstraSim entry point
+        // Callback to ASTRA-sim
         // Use IDs memorized at point of adding the flow, as well as unique src tag for the transition
         if (astrasim_flow_finish_send_cb) {
             int flow_id = _flow.flow_id();
@@ -694,7 +694,7 @@ TcpSink::receivePacket(Packet& pkt) {
     }
 
 #ifdef ASTRASIM_HTSIM
-    // AstraSim entry point
+    // Callback to ASTRA-sim
     // Use IDs memorized at point of adding the flow, as well as unique src tag for the transition
     if (_cumulative_ack >= _src->_flow_size && astrasim_flow_finish_recv_cb) {
         int flow_id = _src->getFlowId();

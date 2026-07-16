@@ -614,6 +614,8 @@ void UecSrc::connectPort(uint32_t port_num,
 
         if (start_time != TRIGGER_START) {
 #ifdef ASTRASIM_HTSIM
+            // AstraSim passes start_time already in picoseconds (simtime_picosec);
+            // applying timeFromUs() would incorrectly scale it by 1e6.
             eventlist().sourceIsPending(*this, start_time);
 #else
             eventlist().sourceIsPending(*this, timeFromUs((uint32_t)start_time));
@@ -862,7 +864,7 @@ bool UecSrc::checkFinished(UecDataPacket::seq_t cum_ack) {
                 _speculating = false;
 
 #ifdef ASTRASIM_HTSIM
-                // AstraSim entry point
+                // Callback to ASTRA-sim
                 // Use IDs memorized at point of adding the flow, as well as unique src tag for the transition
                 unsigned flow_id = _flow.flow_id();
                 int src_id = _debug_srcid;
@@ -2752,7 +2754,7 @@ void UecSink::processData(UecDataPacket& pkt) {
         _nic.sendControlPacket(ack_packet, NULL, this);
 
 #ifdef ASTRASIM_HTSIM
-        // AstraSim entry point
+        // Callback to ASTRA-sim
         // Use IDs memorized at point of adding the flow, as well as unique src tag for the transition
         if (_received_bytes == _src->flowsize()) {
             unsigned flow_id = _flow.flow_id();

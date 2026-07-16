@@ -117,7 +117,7 @@ mem_b UecMsg::addRecvd(UecDataPacket::seq_t seq_no) {
         set_status(MsgStatus::RecvdLast);
 
 #ifdef ASTRASIM_HTSIM
-        // AstraSim entry point
+        // Callback to ASTRA-sim
         // Use IDs memorized at point of adding the flow, as well as unique src tag for the transition
         unsigned flow_id = _pdc.flow_id();
         unsigned msg_id = _msg_id;
@@ -159,7 +159,7 @@ mem_b UecMsg::addAck(UecDataPacket::seq_t ackno) {
         set_status(MsgStatus::Finished);
 
 #ifdef ASTRASIM_HTSIM
-        // AstraSim entry point
+        // Callback to ASTRA-sim
         // Use IDs memorized at point of adding the flow, as well as unique src tag for the transition
         unsigned flow_id = _pdc.flow_id();
         unsigned msg_id = _msg_id;
